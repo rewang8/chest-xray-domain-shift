@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+	body {
+		background-color: #f5f9ff;
+	}
+
+	/* Hide both math displays initially, will display based on JS detection */
+  .mathjax-mobile, .mathml-non-mobile { display: none; }
+
+  /* Show the MathML content by default on non-mobile devices */
+  .show-mathml .mathml-non-mobile { display: block; }
+  .show-mathjax .mathjax-mobile { display: block; }
+
+	.content-margin-container {
+		display: flex;
+		width: 100%; /* Ensure the container is full width */
+		justify-content: left; /* Horizontally centers the children in the container */
+		align-items: center;  /* Vertically centers the children in the container */
+	}
+	.main-content-block {
+		width: 70%; /* Change this percentage as needed */
+    max-width: 1100px; /* Optional: Maximum width */
+		background-color: #fff;
+		border-left: 1px solid #DDD;
+		border-right: 1px solid #DDD;
+		padding: 8px 8px 8px 8px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	}
+	.margin-left-block {
+			font-size: 14px;
+			width: 15%; /* Change this percentage as needed */
+			max-width: 130px; /* Optional: Maximum width */
+			position: relative;
+			margin-left: 10px;
+			text-align: left;
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+			padding: 5px;
+	}
+	.margin-right-block {
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+			font-size: 14px;
+			width: 25%; /* Change this percentage as needed */
+			max-width: 256px; /* Optional: Maximum width */
+			position: relative;
+			text-align: left;
+			padding: 10px;  /* Optional: Adds padding inside the caption */
+	}
+
+	img {
+			max-width: 100%; /* Make sure it fits inside the container */
+			height: auto;
+			display: block;
+			margin: auto;
+	}
+	.my-video {
+			max-width: 100%; /* Make sure it fits inside the container */
+			height: auto;
+			display: block;
+			margin: auto;
+	}
+	/* Hide both video displays initially, will display based on JS detection */
+  .vid-mobile, .vid-non-mobile { display: none; }
+
+  /* Show the video content by default on non-mobile devices */
+  .show-vid-mobile .vid-mobile { display: block; }
+  .show-vid-non-mobile .vid-non-mobile { display: block; }
+
+	a:link,a:visited
+	{
+		color: #0e7862; /*#1367a7;*/
+		text-decoration: none;
+	}
+	a:hover {
+		color: #24b597; /*#208799;*/
+	}
+
+	h1 {
+		font-size: 18px;
+		margin-top: 4px;
+		margin-bottom: 10px;
+	}
+
+	table.header {
+    font-weight: 300;
+    font-size: 17px;
+    flex-grow: 1;
+		width: 70%;
+    max-width: calc(100% - 290px); /* Adjust according to the width of .paper-code-tab */
+	}
+	table td, table td * {
+	    vertical-align: middle;
+	    position: relative;
+	}
+	table.paper-code-tab {
+	    flex-shrink: 0;
+	    margin-left: 8px;
+	    margin-top: 8px;
+	    padding: 0px 0px 0px 8px;
+	    width: 290px;
+	    height: 150px;
+	}
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+
+	hr {
+    height: 1px; /* Sets the height of the line to 1 pixel */
+    border: none; /* Removes the default border */
+    background-color: #DDD; /* Sets the line color to black */
+  }
+
+	div.hypothesis {
+		width: 80%;
+		background-color: #EEE;
+		border: 1px solid black;
+		border-radius: 10px;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		font-family: Courier;
+		font-size: 18px;
+		text-align: center;
+		margin: auto;
+		padding: 16px 16px 16px 16px;
+	}
+
+	div.citation {
+    font-size: 0.8em;
+    background-color:#fff;
+    padding: 10px;
+		height: 200px;
+  }
+
+	.fade-in-inline {
+		position: absolute;
+		text-align: center;
+		margin: auto;
+		-webkit-mask-image: linear-gradient(to right,
+																			transparent 0%,
+																			transparent 40%,
+																			black 50%,
+																			black 90%,
+																			transparent 100%);
+		mask-image: linear-gradient(to right,
+																transparent 0%,
+																transparent 40%,
+																black 50%,
+																black 90%,
+																transparent 100%);
+		-webkit-mask-size: 8000% 100%;
+		mask-size: 8000% 100%;
+		animation-name: sweepMask;
+		animation-duration: 4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		animation-delay: -1s;
+	}
+
+	.fade-in2-inline {
+			animation-delay: 1s;
+	}
+
+	.inline-div {
+			position: relative;
+	    display: inline-block; /* Makes both the div and paragraph inline-block elements */
+	    vertical-align: top; /* Aligns them at the top, you can adjust this to middle, bottom, etc., based on your needs */
+	    width: 50px; /* Optional: Adds space between the div and the paragraph */
+	}
+	/* Automatic numbering */
+	body {
+    counter-reset: section;
+	}
+
+	h1::before {
+		counter-increment: section;
+		counter-reset: subsection;
+		content: counter(section) ". ";
+	}
+	h1::before {
+	content: counter(section) ". ";
+	}
+	h2 {
+	counter-increment: subsection;
+	font-size: 1.2rem;
+	margin-top: 1.3rem;
+	}
+
+	h2::before {
+	content: counter(section) "." counter(subsection) " ";
+	}
+
+	h1 {
+		font-size: 1.8rem;
+		margin-top: 1.6rem;
+	}
+
+	h2 {
+		font-size: 1.2rem;
+		margin-top: 1.3rem;
+	}
+
+	h1 {
+		counter-reset: subsection;
+	}
+
+	.table-block {
+		margin: 25px 0;
+		width: 100%;
+		max-width: 550px;
+		border-collapse: collapse;
+		font-family: Arial, sans-serif;
+		font-size: 15px;
+	}
+
+	.table-block th {
+		background-color: #f0f0f0;
+		font-weight: bold;
+		text-align: left;
+		padding: 8px 10px;
+		border-bottom: 2px solid #ccc;
+	}
+
+	.table-block td {
+		padding: 8px 10px;
+		border-bottom: 1px solid #ddd;
+	}
+
+	.table-title {
+		font-weight: bold;
+		margin-top: 20px;
+		margin-bottom: 8px;
+		font-size: 17px;
+	}
+	.figure-label {
+		font-weight: bold;
+		font-size: 18px;
+		margin-top: 25px;
+		margin-bottom: 8px;
+		color: #445;
+		border-left: 4px solid #889;
+		padding-left: 10px;
+	}
+
+	.figure-container {
+		text-align: center;
+		margin: 20px 0 30px 0;
+	}
+
+	.figure-caption {
+		font-size: 14px;
+		color: #666;
+		margin-top: 6px;
+	}
+	.toc {
+	position: fixed;
+	max-width: inherit;
+	top: max(20%, 120px);
+	padding-right: 8px;
+	}
+
+	.toc b {
+	font-size: 16px;
+	}
+
+	.toc ul {
+	list-style: none;
+	padding-left: 0;
+	margin-top: 10px;
+	}
+
+	.toc-item {
+	margin-bottom: 10px;
+	}
+
+	.toc-h1 a {
+	font-weight: 600;
+	font-size: 14px;
+	}
+
+	.toc-h2 {
+	margin-left: 11px;
+	}
+
+	.toc-h2 a {
+	font-size: 13px;
+	}
+	body {
+    margin: 0;
+    background: linear-gradient(180deg, #eaf0ff 0%, #f7f9ff 45%, #ffffff 100%);
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+                 Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: #222;
+    line-height: 1.6;
+    counter-reset: section;
+  }
+
+  /* Hide both math displays initially, will display based on JS detection */
+  .mathjax-mobile, .mathml-non-mobile { display: none; }
+  .show-mathml .mathml-non-mobile { display: block; }
+  .show-mathjax .mathjax-mobile { display: block; }
+
+  .content-margin-container {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    align-items: flex-start;
+  }
+
+  .main-content-block {
+    width: 70%;
+    max-width: 1100px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px 28px 28px 28px;
+    margin: 24px auto;
+    box-shadow:
+      0 10px 25px rgba(15, 23, 42, 0.06),
+      0 1px 2px rgba(15, 23, 42, 0.06);
+    font-size: 15px;
+  }
+
+  .margin-left-block {
+    font-size: 13px;
+    width: 15%;
+    max-width: 150px;
+    position: relative;
+    margin-left: 10px;
+    text-align: left;
+    padding: 5px;
+  }
+
+  .margin-right-block {
+    font-size: 13px;
+    width: 25%;
+    max-width: 256px;
+    position: relative;
+    text-align: left;
+    padding: 10px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 6px;
+  }
+
+  .my-video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 8px;
+  }
+
+  /* Hide both video displays initially, will display based on JS detection */
+  .vid-mobile, .vid-non-mobile { display: none; }
+  .show-vid-mobile .vid-mobile { display: block; }
+  .show-vid-non-mobile .vid-non-mobile { display: block; }
+
+  /* Link colors – softer blue theme */
+  a:link,
+  a:visited {
+    color: #2457b2;
+    text-decoration: none;
+    transition: color 0.18s ease, text-shadow 0.18s ease;
+  }
+  a:hover {
+    color: #3f7bff;
+    text-shadow: 0 0 0.5px rgba(63, 123, 255, 0.4);
+  }
+
+  /* Header/title area */
+  table.header {
+    font-weight: 300;
+    font-size: 17px;
+    flex-grow: 1;
+    width: 70%;
+    max-width: calc(100% - 290px);
+  }
+  table td, table td * {
+    vertical-align: middle;
+    position: relative;
+  }
+  table.paper-code-tab {
+    flex-shrink: 0;
+    margin-left: 8px;
+    margin-top: 8px;
+    padding: 0 0 0 8px;
+    width: 290px;
+    height: 150px;
+  }
+
+  .layered-paper {
+    box-shadow:
+      0px 0px 1px 1px rgba(0,0,0,0.25),
+      5px 5px 0 0px #fff,
+      5px 5px 1px 1px rgba(0,0,0,0.25),
+      10px 10px 0 0px #fff,
+      10px 10px 1px 1px rgba(0,0,0,0.25);
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 30px;
+    margin-bottom: 5px;
+  }
+
+  hr {
+    height: 1px;
+    border: none;
+    background-color: #dde2f2;
+  }
+
+  div.hypothesis {
+    width: 80%;
+    background: linear-gradient(135deg, #eef2ff, #f9fbff);
+    border: 1px solid #d2dcff;
+    border-radius: 10px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    text-align: center;
+    margin: 18px auto;
+    padding: 14px 18px;
+  }
+
+  div.citation {
+    font-size: 0.85em;
+    background-color: #f7f8ff;
+    border-radius: 8px;
+    border: 1px solid #dde2f5;
+    padding: 12px 14px;
+    height: auto;
+  }
+
+  .fade-in-inline {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0%,
+      transparent 40%,
+      black 50%,
+      black 90%,
+      transparent 100%);
+    mask-image: linear-gradient(to right,
+      transparent 0%,
+      transparent 40%,
+      black 50%,
+      black 90%,
+      transparent 100%);
+    -webkit-mask-size: 8000% 100%;
+    mask-size: 8000% 100%;
+    animation-name: sweepMask;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-delay: -1s;
+  }
+
+  .fade-in2-inline {
+    animation-delay: 1s;
+  }
+
+  .inline-div {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 50px;
+  }
+
+  /* Automatic numbering */
+  h1::before {
+    counter-increment: section;
+    counter-reset: subsection;
+    content: counter(section) ". ";
+  }
+
+  h2 {
+    counter-increment: subsection;
+    font-size: 1.2rem;
+    margin-top: 1.3rem;
+  }
+
+  h2::before {
+    content: counter(section) "." counter(subsection) " ";
+  }
+
+  /* Section heading styling */
+  h1 {
+    font-size: 1.8rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+    color: #1d3557;
+    border-bottom: 1px solid #e1e5f5;
+    padding-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-top: 1.4rem;
+    margin-bottom: 0.4rem;
+    color: #2b3e70;
+  }
+
+  /* Tables */
+  .table-block {
+    margin: 25px 0;
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: #fbfcff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  }
+
+  .table-block th {
+    background: linear-gradient(135deg, #e4e9ff, #f1f4ff);
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #d5ddf3;
+    color: #2b3354;
+  }
+
+  .table-block td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e9f5;
+  }
+
+  .table-block tr:nth-child(even) td {
+    background-color: #f7f8ff;
+  }
+
+  .table-title {
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #28334f;
+  }
+
+  /* Figures */
+  .figure-label {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    color: #243b6b;
+    border-left: 4px solid #4c6fff;
+    padding-left: 10px;
+  }
+
+  .figure-container {
+    text-align: center;
+    margin: 16px 0 24px 0;
+  }
+
+  .figure-caption {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 6px;
+  }
+
+  /* TOC styling */
+  .toc {
+    position: fixed;
+    max-width: inherit;
+    top: max(20%, 120px);
+    padding: 10px 12px;
+    background: rgba(246, 248, 255, 0.96);
+    border-radius: 10px;
+    border: 1px solid #dde3f7;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+  }
+
+  .toc b {
+    font-size: 15px;
+    color: #1f2937;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  .toc-item {
+    margin-bottom: 6px;
+  }
+
+  .toc-h1 a {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1f3b8a;
+  }
+
+  .toc-h2 {
+    margin-left: 10px;
+  }
+
+  .toc-h2 a {
+    font-size: 12px;
+    color: #485d9c;
+  }
+
+  .toc a:hover {
+    color: #315df5;
+    text-shadow: none;
+  }
+  .hero-block {
+    padding: 32px 36px 30px 36px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top left, #f2f5ff 0, #ffffff 55%),
+      radial-gradient(circle at bottom right, #eef3ff 0, #ffffff 60%);
+    box-shadow:
+      0 18px 40px rgba(15, 23, 42, 0.10),
+      0 1px 2px rgba(15, 23, 42, 0.08);
+  }
+
+  .hero-title {
+    font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", sans-serif;
+    font-size: 2.4rem;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #111827;
+    margin: 0 0 18px 0;
+  }
+
+  .hero-subtitle {
+    font-size: 0.98rem;
+    color: #6b7280;
+    margin-top: 18px;
+  }
+
+  .author-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 4px;
+  }
+
+  .author-name {
+    font-size: 1rem;
+    color: #111827;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f3f4ff;
+    border: 1px solid #e0e4ff;
+  }
+
+  .hero-meta {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+
+  @media (max-width: 800px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+    .hero-block {
+      padding: 24px 20px 24px 20px;
+    }
+  }
+
+  /* Keep the outline in its own column instead of covering the article. */
+  *, *::before, *::after { box-sizing: border-box; }
+  .content-margin-container {
+    display: grid;
+    grid-template-columns: minmax(185px, 220px) minmax(0, 920px);
+    justify-content: center;
+    gap: 24px;
+    align-items: start;
+    padding: 0 24px;
+  }
+  .margin-left-block {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  .margin-right-block { display: none; }
+  .main-content-block {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 24px 0;
+    padding: 28px 36px;
+    font-size: 16px;
+  }
+  .toc {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    margin-top: 24px;
+  }
+  .table-block { display: block; overflow-x: auto; max-width: 100%; }
+  .figure-container { overflow-x: auto; }
+  @media (max-width: 800px) {
+    .content-margin-container {
+      display: block;
+      padding: 0 16px;
+    }
+    .margin-left-block { display: none; }
+    .main-content-block { padding: 22px 20px; margin: 16px 0; }
+    .hero-title { font-size: clamp(1.65rem, 6vw, 2rem); }
+  }
+</style>
+
+	  <title>Latent Diffusion Models For Chest X-Ray Classifier Domain Shift</title>
+      <meta property="og:title" content="Latent Diffusion Models For Chest X-Ray Classifier Domain Shift" />
+			<meta charset="UTF-8">
+  </head>
+
+  <body>
+
+		<div class="content-margin-container">
+  <div class="margin-left-block"></div>
+
+  <div class="main-content-block hero-block">
+    <div class="hero-title">
+      Latent Diffusion Models For Chest X-Ray
+      <br>
+      Classifier Domain Shift
+    </div>
+
+    <div class="author-row">
+      <span class="author-name">Sydney Du</span>
+      <span class="author-name">Megan Sun</span>
+      <span class="author-name">Rebecca Wang</span>
+    </div>
+
+    <div class="hero-meta">
+      Final project for 6.7960, MIT
+    </div>
+  </div>
+
+  <div class="margin-right-block"></div>
+</div>
+
+  <!-- Intro + TOC in the same aligned row -->
+  <div class="content-margin-container" id="intro">
+    <div class="margin-left-block">
+      <div class="toc">
+        <b>Outline</b>
+        <ul id="toc-list"></ul>
+      </div>
+    </div>
+
+    <div class="main-content-block">
+      <h1>Introduction</h1>
+      <h2>Motivation</h2>
+      <p>
+        Deep learning has been widely studied for medical image analysis, including chest X-rays, where models are
+        trained to predict disease labels directly from images. However, these models often struggle when the images
+        come from a different setting than the training data. One such example is view position. Frontal chest X-rays
+        are typically acquired as anteroposterior (AP) or posteroanterior (PA) views, which differ in patient
+        positioning and angle. AP images, often taken with portable equipment, tend to enlarge the heart compared to
+        standard PA images. These differences cause a model trained mostly on one view to perform noticeably worse on
+        the other and, more generally, contribute to domain shift in chest X-ray classification.
+      </p>
+      <p>
+        Diffusion models learn a prior over images by iteratively denoising noisy samples toward the data distribution.
+        Latent diffusion models (LDMs) make this process more efficient by first compressing images into a
+        lower-dimensional latent space (for example, with an autoencoder) and running diffusion there before decoding
+        back to pixels. In medical imaging, diffusion is most often used to generate new data or to support domain shift
+        methods that assume access to both source and target images during training. In practice, target domain data is
+        not always available, for instance, for underrepresented hospitals or varying X-ray views.
+      </p>
+      <p>
+        We instead study what latent diffusion can contribute to domain robustness when only a single domain is
+        available. We hypothesize that diffusion can act as a tool to make unseen view images look more like the
+        training domain in latent space. By applying a small noise/denoise step using a prior learned from a source
+        view, we modify latents from both AP and PA images so they more closely match a shared prior. This leads to our
+        research question: can a latent diffusion model trained on a single chest X-ray view, and applied as a small
+        noise/denoise step at test time, reduce AP/PA domain shift in multi-label disease classification, compared to a
+        VAE-only baseline?
+      </p>
+      <p>
+        Our project provides the first systematic evaluation of latent diffusion for AP/PA view shift in chest X-ray
+        classification when only a single view is available. Unlike prior work that uses diffusion mainly to generate
+        synthetic chest X-rays or assumes access to both source and target domains, we train a latent diffusion model on
+        one view and use it only to regularize VAE latents for multi-label disease prediction. Our results show that
+        this setup reduces the AP/PA domain gap, suggesting that latent diffusion can help stabilize performance on
+        underrepresented data in medical imaging.
+      </p>
+
+      <h2>Related Works</h2>
+      <p>
+        Deep learning has shown strong performance in chest X-ray analysis, including multi-label
+        classification, localization, and segmentation. Wang et al. (2017)
+        <a href="#ref_1"><sup>[1]</sup></a> introduced the ChestX-ray8 dataset as a benchmark, and
+        Guo et al. (2024)<a href="#ref_2"><sup>[2]</sup></a> demonstrated models often fail to generalize across
+        different acquisition settings, hospitals, or patient populations, highlighting domain shift.
+        Scanner and view differences can cause substantial performance drops, with MRI affected severely
+        and X-rays moderately.
+      </p>
+
+      <p>
+        Domain adaptation (DA) and domain generalization (DG) approaches, including meta-learning
+        (Li et al., 2020
+        <a href="#ref_3"><sup>[3]</sup></a>) and adversarial GAN-based methods
+        (Nature Scientific Reports, 2025
+        <a href="#ref_4"><sup>[4]</sup></a>), aim to reduce these shifts but typically require access to
+        target-domain data. Generative models, particularly diffusion models, have recently emerged as
+        tools for medical image generation and reconstruction. DDPMs (Ho et al., 2020
+        <a href="#ref_5"><sup>[5]</sup></a>) and latent diffusion models (Rombach et al., 2022
+        <a href="#ref_6"><sup>[6]</sup></a>) learn generative priors by reversing a noise-corruption
+        process and have been applied to MRI, CT, and X-ray synthesis, denoising, artifact correction,
+        and super-resolution. Surveys such as Kazerouni et al. (2022
+        <a href="#ref_7"><sup>[7]</sup></a>) note that diffusion models address common GAN issues like mode collapse
+        while providing high-quality samples. In chest X-rays, diffusion has been used for synthetic
+        image generation, style transfer, data augmentation, and domain translation, often requiring
+        access to both source and target distributions during training. Conditional diffusion models
+        trained on multiple scanner styles, for example, can translate images between domains, but rely
+        on paired or co-existing multi-domain datasets.
+      </p>
+
+      <p>
+        Existing work, however, has not investigated whether diffusion priors can strengthen latent
+        representations for downstream classifiers, nor whether a diffusion model trained on a single view
+        (AP or PA) can improve robustness to the unseen view. Our project addresses this gap by using
+        latent diffusion as a latent space regularizer to reduce AP/PA domain shift in multi-label chest
+        X-ray classification without access to target-domain images, focusing on representation refinement
+        rather than image synthesis.
+      </p>
+    </div>
+
+    <div class="margin-right-block"></div>
+  </div>
+
+		<div class="content-margin-container" id="does_x_do_y">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+					<h1>Methods</h1>
+					We use the NIH Chest X-ray Dataset of 14 Common Thorax Disease Categories, which consists of frontal images taken with a view position of AP or PA. The dataset contains 67,310 PA images and 44,810 AP images. All images are converted to single-channel grayscale and resized to 256×256 pixels. Because each image can have multiple pathology labels, we formulate the problem as a multi-label classification task. The figure below shows one example frontal chest X-ray for each of the 14 pathology labels, along with a “No Finding” case, from the NIH Chest X-ray Dataset:<br>
+					<div style="text-align:center; margin: 20px 0;">
+						<img src="images/chestxray_grid.png"
+							alt="NIH Chest X-ray Dataset examples"
+							style="width:100%; max-width:900px; border-radius:6px;">
+					</div><br>
+					<h2>Variational Autoencoder</h2>
+					<p>We first train a convolutional variational autoencoder (VAE) that maps each X-ray, preprocessed to a single-channel 256x256 image, to a low-dimensional latent vector (dimension 64) and reconstructs it back to image space. For each source view (AP or PA), we train a separate VAE on that view only, using an 80-20 train-validation split.</p>
+<p>The VAE is trained with an objective that combines mean squared error (MSE) reconstruction loss with a KL-divergence regularizer. Each model is trained for 5 epochs over the full source view dataset (>60k PA images or  >44k AP images). Across both view types, train and validation MSE converged to roughly 280, indicating reasonable reconstruction quality without severe overfitting.</p>
+					<h2>Latent Diffusion Model</h2>
+					After training a VAE on a specific view (AP or PA), we freeze its encoder and train a latent space diffusion model to learn the structure of that view’s prior. Each image x is mapped into the 64 or 128-dimensional VAE latent space using: z = Encoder(x).
+During diffusion training, we randomly select a timestep t, add noise to the latent using the forward diffusion process, <p style="text-align:center;">
+\[
+z_t = \sqrt{\bar{\alpha}_t}\, z + \sqrt{1 - \bar{\alpha}_t}\, \varepsilon,
+\qquad \varepsilon \sim \mathcal{N}(0, I),
+\]
+</p>
+
+<p>
+and train a neural network \(\varepsilon_\theta(z_t, t)\) to predict the injected noise.
+We minimize:
+</p>
+
+<p style="text-align:center;">
+\[
+\mathcal{L} = \mathbb{E}_{z, t, \varepsilon}
+\bigl[ \lVert \varepsilon - \varepsilon_\theta(z_t, t) \rVert_2^2 \bigr],
+\]
+</p>
+
+<p>
+which is the standard DDPM noise-prediction objective.
+</p>
+
+<p>
+Our setting operates on low-dimensional VAE latents (64 dimensions). Accordingly, we use a
+lightweight MLP conditional on timestep embeddings. The model learns a generative prior
+over AP or PA latent geometry.
+</p>
+
+<p>
+After training, the diffusion model maps a noisy latent back toward the distribution learned
+from the source view data. This process effectively regularizes the latent representation,
+pulling it toward the VAE’s underlying manifold and reducing view-specific distortions
+without changing the VAE parameters.
+</p>
+
+
+
+          
+         <h2>Latent Representations and Classifier</h2>
+		 <p>
+We evaluate whether diffusion-based latent refinement improves cross-view
+generalization for pathology prediction. For each image \(x\), we construct two
+types of representations:
+</p>
+
+<ol>
+    <li>
+        <strong>Baseline (VAE-only) latent:</strong>
+        \( z_{\text{raw}} = \text{Enc}(x) \).
+        <p>
+        These features come directly from the frozen VAE encoder and represent the
+        conventional latent embedding used in many VAE-based diagnostic pipelines.
+        </p>
+    </li>
+
+    <li>
+        <strong>Diffusion-refined latent:</strong>
+        To apply the learned generative prior, we perturb the raw latent at a chosen timestep \(t^*\):
+        <p style="text-align:center;">
+        \[
+        z_{t^*} = \sqrt{\bar{\alpha}_{t^*}}\, z_{\text{raw}}
+        + \sqrt{1 - \bar{\alpha}_{t^*}}\, \varepsilon,
+        \]
+        </p>
+
+        <p>
+        and run a single reverse-diffusion denoising step:
+        </p>
+
+        <p style="text-align:center;">
+        \[
+        \hat{z} \;=\; f_{\theta}(z_{t^*},\, t^*).
+        \]
+        </p>
+
+        <p>
+        This encourages the latent to move toward regions of latent space consistent
+        with the source view VAE distribution (AP or PA), smoothing noise and reducing
+        view-dependent distortions. The classifier only sees these refined
+        latents, not the images themselves, so any performance gain must arise from
+        improved latent representations.
+        </p>
+    </li>
+</ol>
+Each classifier is a small feedforward neural network consisting of three fully connected layers with ReLU activations in the first two layers, followed by a sigmoid to produce per-label probabilities. Binary cross-entropy (BCE) is optimized over all labels using mini-batch Adam for 20 epochs. The classifier is trained exclusively on source view latents, so differences in cross-view performance reflect changes in the latent representation rather than model capacity.
+
+
+		    </div>
+			 <div class="margin-right-block"></div>
+  </div>
+		</div>
+		
+		<div class="content-margin-container">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+            <h1>Experiments</h1>
+            <p>
+We study how source view and diffusion affect robustness to AP/PA domain shift.
+</p>
+
+<p>
+The experiment proceeds as follows:
+</p>
+
+<ol style="margin-left: 20px;">
+    <li>
+        Train a VAE on the chosen source view images.
+    </li>
+
+    <li>
+        Train a latent diffusion model on the corresponding VAE latents.
+    </li>
+
+    <li>
+        Train two multi-label classifiers on the resulting latents:
+        <ul style="margin-top: 10px;">
+            <li>
+                VAE-only baseline: trained on raw VAE latents.
+            </li>
+            <li>
+                VAE + diffusion: trained on diffusion-refined latents.
+            </li>
+        </ul>
+    </li>
+</ol>
+<p>
+<strong>Evaluation:</strong> Each classifier is assessed in two ways:
+</p>
+
+<ul>
+    <li>
+        <strong>In-domain:</strong>
+        We evaluate classifier performance on the source view (e.g., train on AP and test on AP).
+        This tests whether or not diffusion maintained the performance of the classifier on the
+        data it was trained on.
+    </li>
+
+    <li>
+        <strong>Cross-domain:</strong>
+        We evaluate classifier performance on the opposite view (e.g., train on AP and test on PA).
+        This tests the effects of diffusion on helping the model generalize to unseen domains.
+    </li>
+</ul>
+
+<p>
+We use Area Under the Curve (AUROC) as our evaluation metric. AUROC is a suitable metric because it measures how well the model ranks positive cases above negative ones across all score thresholds and can be computed separately for each disease. This matches our setting where one image can be labeled with multiple diseases. We report macro and per-label AUROC across diseases and focus on the domain gap:
+</p>
+
+<p style="text-align:center;">
+\[
+\Delta = \text{AUROC}_{\text{in-domain}} - \text{AUROC}_{\text{cross-domain}}.
+\]
+</p>
+
+<p>
+where smaller \(\Delta\) indicates less degradation under AP/PA shift. We compute \(\Delta\)
+for both pipelines (VAE-only and VAE&nbsp;+ diffusion) across all four configurations to
+evaluate whether diffusion reduces the AP/PA domain gap.
+</p>
+Architectural and training hyperparameters for each stage are summarized in the following tables:
+<div class="table-title">Table 1. VAE Hyperparameters</div>
+
+<table class="table-block">
+    <tr>
+        <th>Category</th><th>Value</th>
+    </tr>
+    <tr>
+        <td>Encoder Depth</td>
+        <td>4 convolutional blocks + linear layers (μ, logσ²)</td>
+    </tr>
+    <tr>
+        <td>Decoder Depth</td>
+        <td>Linear + reshape + 4 transposed convolution blocks</td>
+    </tr>
+    <tr>
+        <td>Latent Dimension</td>
+        <td>64</td>
+    </tr>
+    <tr>
+        <td>Training Epochs</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>Batch Size</td>
+        <td>256</td>
+    </tr>
+    <tr>
+        <td>Optimizer</td>
+        <td>Adam (lr = 1e-3)</td>
+    </tr>
+    <tr>
+        <td>Loss Function</td>
+        <td>MSE reconstruction + KL divergence</td>
+    </tr>
+</table>
+<div class="table-title">Table 2. Diffusion Model Hyperparameters</div>
+
+<table class="table-block">
+    <tr>
+        <th>Category</th><th>Value</th>
+    </tr>
+    <tr>
+        <td>Diffusion Steps (T)</td>
+        <td>1000</td>
+    </tr>
+    <tr>
+        <td>Noise Schedule</td>
+        <td>Linear schedule<sub>t</sub></td>
+    </tr>
+    <tr>
+        <td>Model Architecture</td>
+        <td>MLP denoiser (64 → 128 → 64 → 64)</td>
+    </tr>
+    <tr>
+        <td>Training Epochs</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>Batch Size</td>
+        <td>256</td>
+    </tr>
+    <tr>
+        <td>Optimizer</td>
+        <td>Adam (lr = 1e-4)</td>
+    </tr>
+</table>
+<div class="table-title">Table 3. Classifier Hyperparameters</div>
+
+<table class="table-block">
+    <tr>
+        <th>Category</th><th>Value</th>
+    </tr>
+    <tr>
+        <td>Hidden Sizes</td>
+        <td>128 → 64</td>
+    </tr>
+    <tr>
+        <td>Number of Layers</td>
+        <td>3 linear layers (64 → 128 → 64 → 15)</td>
+    </tr>
+    <tr>
+        <td>Activation</td>
+        <td>ReLU</td>
+    </tr>
+    <tr>
+        <td>Batch Size</td>
+        <td>256</td>
+    </tr>
+    <tr>
+        <td>Optimizer</td>
+        <td>Adam (lr = 1e-3)</td>
+    </tr>
+    <tr>
+        <td>Training Epochs</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>Loss Function</td>
+        <td>BCEWithLogitsLoss</td>
+    </tr>
+</table>
+
+		    </div>
+			 <div class="margin-right-block"></div>
+  </div>
+		</div>
+
+		<div class="content-margin-container" id="implications_and_limitations">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+						<h1> Results</h1>
+						Our main goal is to see whether latent diffusion can improve cross-domain performance. We want to see whether, after training the model exclusively on a single source view (AP or PA), passing its latents through the diffusion model helps the classifier do better on the opposite view it never saw during training. In all of the bar plots, red bars show in-domain performance (testing on the source view) and blue bars show cross-domain performance (testing on the unseen view).
+						<h2>Training on AP Images (AP as Source View)</h2>
+						Figures A–C show the results of training the model only on AP images and then testing it on both AP (in-domain) and PA (cross-domain). On the AP test set, the baseline classifier trained on raw VAE latents reaches a macro AUROC of about 0.70, but this drops to about 0.63 when we evaluate the same model on PA images. This gap is the domain shift we are trying to reduce.
+						<div class="figure-label">Figure A: Baseline Classifier Trained on VAE Latents (AP Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4a.png" alt="Baseline classifier bar plot" style="max-width: 100%; height: auto;">
+						</div>
+
+						<p>
+						When we add a small diffusion denoising step on the latents, the macro AUROC on AP test images 
+						changes only slightly (0.70 → 0.69), so in-domain performance is essentially preserved. 
+						However, the macro AUROC on PA images increases from 0.63 to 0.65, meaning the AP-trained 
+						model does a bit better on the unseen view.
+						</p>
+						<div class="figure-label">Figure B: Classifier Trained on Denoised Latents (AP Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4b.png" alt="Classifier trained on diffusion latents" style="max-width: 100%; height: auto;">
+						</div>
+
+						<p>
+						To summarize how the gap changes per disease, Figure C plots a “double-delta” for each class.
+						For disease \(k\), we define:
+						</p>
+
+						<p style="text-align:center;">
+						\[
+						\Delta^{(k)}_{\text{diff}} = 
+						\big( \text{AP}^{(k)}_{\text{denoised}} - \text{PA}^{(k)}_{\text{denoised}} \big)
+						-
+						\big( \text{AP}^{(k)}_{\text{original}} - \text{PA}^{(k)}_{\text{original}} \big).
+						\]
+						</p>
+						<div class="figure-label">Figure C: Domain Gap Improvement by Disease (AP Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4c.png"
+								alt="Double delta per disease"
+								style="max-width: 100%; height: auto; margin-bottom: 12px;">
+						</div>
+
+						<table class="table-block" style="margin-left:auto; margin-right:auto;">
+							<tr>
+								<th>class</th>
+								<th>test_AP_denoised</th>
+								<th>double_delta</th>
+								<th>delta_denoised</th>
+								<th>delta_original</th>
+							</tr>
+							<tr>
+								<td>Hernia</td>
+								<td>0.698012</td>
+								<td>-0.072940</td>
+								<td>0.154277</td>
+								<td>0.227217</td>
+							</tr>
+							<tr>
+								<td>Pneumothorax</td>
+								<td>0.691446</td>
+								<td>-0.044538</td>
+								<td>0.033361</td>
+								<td>0.077899</td>
+							</tr>
+							<tr>
+								<td>Edema</td>
+								<td>0.744306</td>
+								<td>-0.018603</td>
+								<td>0.049573</td>
+								<td>0.068176</td>
+							</tr>
+							<tr>
+								<td>Pneumonia</td>
+								<td>0.657743</td>
+								<td>-0.012706</td>
+								<td>0.064339</td>
+								<td>0.077044</td>
+							</tr>
+							<tr>
+								<td>Infiltration</td>
+								<td>0.666233</td>
+								<td>-0.011479</td>
+								<td>0.107711</td>
+								<td>0.119191</td>
+							</tr>
+							<tr>
+								<td>Mass</td>
+								<td>0.631571</td>
+								<td>-0.004799</td>
+								<td>0.027447</td>
+								<td>0.032246</td>
+							</tr>
+							<tr>
+								<td>No Finding</td>
+								<td>0.686138</td>
+								<td>-0.004240</td>
+								<td>0.047680</td>
+								<td>0.051920</td>
+							</tr>
+							<tr>
+								<td>Consolidation</td>
+								<td>0.697211</td>
+								<td>-0.002669</td>
+								<td>0.020308</td>
+								<td>0.022977</td>
+							</tr>
+							<tr>
+								<td>Emphysema</td>
+								<td>0.695523</td>
+								<td>-0.002460</td>
+								<td>0.085843</td>
+								<td>0.088303</td>
+							</tr>
+							<tr>
+								<td>Atelectasis</td>
+								<td>0.672948</td>
+								<td>-0.001825</td>
+								<td>-0.016666</td>
+								<td>-0.014841</td>
+							</tr>
+							<tr>
+								<td>Nodule</td>
+								<td>0.570515</td>
+								<td>-0.001635</td>
+								<td>0.020991</td>
+								<td>0.022626</td>
+							</tr>
+							<tr>
+								<td>Effusion</td>
+								<td>0.735596</td>
+								<td>-0.001399</td>
+								<td>-0.023606</td>
+								<td>-0.022207</td>
+							</tr>
+							<tr>
+								<td>Cardiomegaly</td>
+								<td>0.763079</td>
+								<td>0.003002</td>
+								<td>0.003397</td>
+								<td>0.000395</td>
+							</tr>
+							<tr>
+								<td>Fibrosis</td>
+								<td>0.736810</td>
+								<td>0.010587</td>
+								<td>0.161774</td>
+								<td>0.151187</td>
+							</tr>
+							<tr>
+								<td>Pleural_Thickening</td>
+								<td>0.673475</td>
+								<td>0.010597</td>
+								<td>0.049091</td>
+								<td>0.038494</td>
+							</tr>
+						</table>
+						<p>
+							Values below zero mean that diffusion improved/reduced the domain gap for that disease. The mean double-delta across all 14 pathologies is −0.0103. This may seem small, but Figure C shows that most diseases have negative double-delta values, indicating widely improved cross-domain behavior. Some classes benefit much more than average: for example, hernia has a double-delta of about −0.07 because its domain gap shrinks from roughly 0.23 to 0.16, and its PA AUROC rises from about 0.51 to 0.54. Pneumothorax shows a similar pattern of improvement.
+						</p>
+						<p>
+							The table in Figure C lists the exact AUROC values for each disease in the AP-trained setting (original vs. diffusion, AP vs. PA), reinforcing the main trends shown above. Our results show that training purely on AP creates a noticeable performance drop on PA images, and latent diffusion mitigates that drop without sacrificing AP performance.
+
+						</p>
+						<h2>Training on PA Images (PA as Source View)</h2>
+						We repeated the same process using PA as the source view instead. Figures D-F mirror Figures A-C.
+						<div class="figure-label">Figure D: Baseline Classifier Trained on VAE Latents (PA Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4d.png" alt="Baseline classifier bar plot" style="max-width: 100%; height: auto;">
+						</div>
+						<div class="figure-label">Figure E: Classifier Trained on Denoised Latents (PA Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4e.png" alt="Baseline classifier bar plot" style="max-width: 100%; height: auto;">
+						</div>
+						
+						<p>
+						To summarize how the gap changes per disease, Figure F plots a “double-delta” for each class.
+						For disease \(k\), we define:
+						</p>
+
+						<p style="text-align:center;">
+						\[
+						\Delta^{(k)}_{\text{diff}} = 
+						\big( \text{PA}^{(k)}_{\text{denoised}} - \text{AP}^{(k)}_{\text{denoised}} \big)
+						-
+						\big( \text{PA}^{(k)}_{\text{original}} - \text{AP}^{(k)}_{\text{original}} \big).
+						\]
+						</p>
+
+
+						<div class="figure-label">Figure F: Domain Gap Improvement by Disease (PA Source View)</div>
+
+						<div class="figure-container">
+							<img src="images/figure4f.png"
+								alt="Double delta per disease"
+								style="max-width: 100%; height: auto; margin-bottom: 12px;">
+						</div>
+
+						<table class="table-block" style="margin-left:auto; margin-right:auto;">
+						<tr>
+							<th>class</th>
+							<th>test_PA_denoised</th>
+							<th>double_delta</th>
+							<th>delta_denoised</th>
+							<th>delta_original</th>
+						</tr>
+
+						<tr><td>Fibrosis</td><td>0.619635</td><td>-0.027557</td><td>0.012189</td><td>0.039746</td></tr>
+						<tr><td>Emphysema</td><td>0.765418</td><td>-0.019833</td><td>0.175224</td><td>0.195057</td></tr>
+						<tr><td>Mass</td><td>0.712057</td><td>-0.018806</td><td>0.127157</td><td>0.145963</td></tr>
+						<tr><td>Pneumonia</td><td>0.633749</td><td>-0.018498</td><td>0.032965</td><td>0.051463</td></tr>
+						<tr><td>Cardiomegaly</td><td>0.856743</td><td>-0.017370</td><td>0.162933</td><td>0.180304</td></tr>
+						<tr><td>Edema</td><td>0.745859</td><td>-0.010642</td><td>0.076238</td><td>0.086880</td></tr>
+						<tr><td>No Finding</td><td>0.712733</td><td>-0.007583</td><td>0.061717</td><td>0.069300</td></tr>
+						<tr><td>Infiltration</td><td>0.621657</td><td>-0.007566</td><td>0.007263</td><td>0.014829</td></tr>
+						<tr><td>Consolidation</td><td>0.717739</td><td>-0.006855</td><td>0.077939</td><td>0.084794</td></tr>
+						<tr><td>Effusion</td><td>0.829343</td><td>-0.005736</td><td>0.136966</td><td>0.142702</td></tr>
+						<tr><td>Atelectasis</td><td>0.741936</td><td>-0.002559</td><td>0.114241</td><td>0.116800</td></tr>
+						<tr><td>Pleural_Thickening</td><td>0.720296</td><td>-0.000057</td><td>0.087447</td><td>0.087504</td></tr>
+						<tr><td>Pneumothorax</td><td>0.811678</td><td>0.000286</td><td>0.204602</td><td>0.204316</td></tr>
+						<tr><td>Nodule</td><td>0.592849</td><td>0.006394</td><td>0.040546</td><td>0.034152</td></tr>
+						<tr><td>Hernia</td><td>0.699858</td><td>0.023913</td><td>0.122367</td><td>0.098454</td></tr>
+
+					</table>
+					<p>When treating PA images as the source domain, we observe a similar but distinct pattern compared to the AP setting. The mean double-delta across all classes was -0.0075. While this value is smaller than in the AP-trained experiment, it confirms that latent diffusion generally acts to reduce the performance gap between the source (PA) and target (AP) domains.</p>
+					<p>A closer look reveals that the vast majority of pathologies exhibited negative double-delta values, indicating widespread improvement in cross-domain robustness. However, the overall mean was heavily influenced by a single outlier: Hernia. In the AP-trained model, Hernia saw the most dramatic improvement; conversely, in the PA-trained model, it exhibited a positive double-delta of +0.024. This "Hernia offset" effectively counterbalanced the gains achieved by other classes, dragging the mean improvement closer to zero despite the broad trend of gap reduction.</p>
+					<p>Excluding this outlier, several conditions improved significantly from the diffusion refinement. The most substantial reduction in the domain gap occurred for Effusion, which showed a double-delta of approximately -0.086. This was followed by Fibrosis (-0.028) and Emphysema (-0.020). Several other pathologies, including Mass (-0.019), Pneumonia (-0.018), and Cardiomegaly (-0.017), showed consistent but moderate improvements.</p>
+
+
+
+		    </div>
+		    <div class="margin-right-block">
+		    </div>
+		</div>
+
+		<div class="content-margin-container" id="implications_and_limitations">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+						<h1>Discussion</h1>
+						Across all configurations, latent diffusion provided a moderate but consistent improvement in decreasing the domain gap between AP/PA views. This suggests that the diffusion step helps smooth out some view-specific variation without erasing structure that can be used for disease prediction.
+						<h2>Limitations</h2>
+						<p>We only study the NIH Chest X-ray dataset and focus on the AP/PA split, so performance might differ in other hospitals, scanners, or imaging settings. However, the methods and insights used, such as using latent space diffusion to reduce domain shifts, can likely be applied to other datasets, modalities, or related tasks. The diffusion model is trained just to denoise source latents, without explicitly removing view-specific information or aligning AP and PA distributions, so it cannot fully bridge the domain gap on its own. Due to our compute limitation, our models are relatively small, trained for only a few epochs, and the latent size is just 64, which limits the detail captured in the representations. Finally, we use a simple MLP as the downstream classifier, which isolates the effect of the learned representations but results in AUROC values lower than those of state-of-the-art deep learning chest X-ray models. Despite these limitations, we see promising indications that this approach helps reduce domain shifts, and larger models, longer training, or higher-dimensional latent spaces could further improve results.</p>
+						<h2>Future Work</h2>
+						<p>There are several natural extensions of this work. On the modeling side, increasing the latent dimension and training for longer could improve reconstruction quality and give the diffusion model more room to learn useful invariances. Additionally, future experiments could introduce multiple domain labels, such as different hospitals or scanner models, and test whether diffusion can help shrink gaps across several domains at once.</p>
+<p>Furthermore, it would be interesting to let the diffusion model see a limited amount of target view data during training (e.g., a few PA images when AP is the source), so it can learn information about the target domain instead of training completely blind to it. Another direction is to train diffusion with domain-awareness by adding an explicit adversarial or contrastive objective that encourages AP and PA latents to align.</p>
+<p>More broadly, our results explore the potential of diffusion models to change representations from one domain so they more closely resemble another, rather than using diffusion only for generative purposes. This idea can be expanded beyond chest X-rays, and similar setups could be applied in other deep learning problems where models need to handle a shift between training and test domains.</p>
+
+		    </div>
+		    <div class="margin-right-block">
+		    </div>
+		</div>
+
+		<div class="content-margin-container" id="implications_and_limitations">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+						<h1>Conclusion</h1>
+						<p>In this project, we evaluated whether a latent diffusion model trained solely on a single source view (AP or PA) of chest X-rays could reduce domain shift without explicit access to the target domain. We first showed that models trained exclusively on one view experienced a clear performance drop when evaluated on the opposite, unseen view, confirming a substantial AP/PA domain shift. We then trained VAEs on NIH Chest X-ray AP or PA images, fit a latent diffusion model on source view latents, and compared disease classifiers trained on raw latents to classifiers trained on latents after a small noise/denoise diffusion step. Across our experiments, the diffusion step kept performance on the source view nearly unchanged while slightly but consistently reducing the AP/PA performance gap.</p>
+<p>It is increasingly important to develop methods for mitigating domain shift in medical imaging because many clinical datasets are imbalanced across underrepresented settings such as lesser-used scanners and smaller hospitals, which often see the largest performance drops. Our work addresses a gap in prior diffusion-based approaches, which typically generate synthetic images or assume access to both source and target domains during training, by showing that a single-view latent diffusion model can already improve robustness to AP/PA view shift when used only as a latent regularizer. Our results suggest that diffusion models can help build more reliable chest X-ray classifiers in underrepresented settings. More generally, this work highlights a path for future research that uses generative models to improve robustness and equity for patients whose data are least represented in training.</p>
+
+		    </div>
+		    <div class="margin-right-block">
+		    </div>
+		</div>
+
+
+		<div class="content-margin-container" id="citations">
+    <div class="margin-left-block"></div>
+    <div class="main-content-block">
+        <div class='citation' id="references" style="height:auto"><br>
+            <span style="font-size:16px">References:</span><br><br>
+
+            <a id="ref_1"></a>[1] 
+            Wang, X., Peng, Y., Lu, L., Lu, Z., Bagheri, M., & Summers, R. M. (2017).
+            <a href="https://arxiv.org/abs/1705.02315">ChestX-ray8: Hospital-scale chest X-ray database and benchmarks on weakly-supervised classification and localization of common thorax diseases</a>.
+            CVPR. <br><br>
+
+            <a id="ref_2"></a>[2]
+			Guo, B., et al. (2024). 
+            <a href="https://arxiv.org/abs/2409.04368">The Impact of Scanner Domain Shift on Deep Learning Performance in Medical Imaging: An Experimental Study</a>.
+            arXiv:2409.04368. <br><br>
+
+            <a id="ref_3"></a>[3] 
+            Khandelwal, P., Yushkevich, P. (2020).
+            <a href="https://arxiv.org/abs/2008.07724">Domain Generalizer: A Few-shot Meta Learning Framework for Domain Generalization in Medical Imaging</a>.
+            arXiv:2008.07724. <br><br>
+
+            <a id="ref_4"></a>[4] 
+			Musa, A., Prasad, R. & Hernandez, M (2025).
+            <a href="https://www.nature.com/articles/s41598-025-95390-3">Addressing cross-population domain shift in chest X-ray classification through supervised adversarial domain adaptation.
+            Sci Rep 15, 11383. <br><br>
+
+            <a id="ref_5"></a>[5] 
+            Ho, J., Jain, A., & Abbeel, P. (2020).
+            <a href="https://arxiv.org/abs/2006.11239">Denoising diffusion probabilistic models</a>.
+            NeurIPS. <br><br>
+
+            <a id="ref_6"></a>[6] 
+            Rombach, R., Blattmann, A., Lorenz, D. A., Esser, P., & Ommer, B. (2022).
+            <a href="https://arxiv.org/abs/2112.10752">High-Resolution Image Synthesis with Latent Diffusion Models</a>.
+            CVPR. <br><br>
+
+            <a id="ref_7"></a>[7] 
+            Kazerouni, A., et al. (2022).
+            <a href="https://arxiv.org/abs/2211.07804">Diffusion Models for Medical Image Analysis: A Comprehensive Survey.</a>
+            arXiv:2211.07804. <br><br>
+        </div>
+    </div>
+    <div class="margin-right-block"></div>
+</div>
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+	const tocList = document.getElementById("toc-list");
+	if (!tocList) return;
+
+	let section = 0;
+	let subsection = 0;
+
+	const headings = document.querySelectorAll(".main-content-block h1, .main-content-block h2");
+
+	headings.forEach((h) => {
+		const tag = h.tagName;
+
+		if (tag === "H1") {
+		section += 1;
+		subsection = 0;
+		} else if (tag === "H2") {
+		subsection += 1;
+		}
+
+		const number = tag === "H1" ? String(section) : section + "." + subsection;
+
+		if (!h.id) {
+		h.id = "sec-" + number.replace(/\./g, "-");
+		}
+
+		const cleanText = h.textContent.replace(/^\s*\d+(\.\d+)?\s*/, "").trim();
+
+		const li = document.createElement("li");
+		li.className = "toc-item " + (tag === "H1" ? "toc-h1" : "toc-h2");
+
+		const a = document.createElement("a");
+		a.href = "#" + h.id;
+		a.textContent = number + " " + cleanText;
+
+		li.appendChild(a);
+		tocList.appendChild(li);
+	});
+	});
+	</script>
+	</body>
+
+</html>
